@@ -1,0 +1,52 @@
+@(habitants : List[Habitant])
+
+<div id="accordion">
+    @for(habitant <- habitants){
+    <div class="card">
+        <div class="card-header container" id="heading-@habitant.id">
+            <div class="row">
+                <div class="col-md-9">
+                    <p>Surname: @habitant.surname Name: @habitant.name </p>
+                </div>
+                <div class="col-md-3" align="right">
+                    <button class="btn btn-primary" data-toggle="collapse" data-target="#collapse-@habitant.id" aria-expanded="false" aria-controls="collapse-@habitant.id">
+                        Details
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="collapse-@habitant.id" class="collapse" aria-labelledby="heading-@habitant.id" data-parent="#accordion">
+            <div class="card-body container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>
+                            Information
+                        </h5>
+                        <p>Surname: @habitant.surname </p>
+                        <p>Name: @habitant.name </p>
+                        <p>Patronymic: @habitant.patronymic</p>
+                        <p>BirthDay: @habitant.birthday</p>
+                        <p>Sex: @habitant.sex</p>
+                        @if(habitant.careerObjective != null){
+                            <p>CareerObjective: @habitant.careerObjective.name</p>
+                        }
+                        <p>Working capacity:
+                            @if(habitant.workingCapacity){
+                                capable
+                            } else {
+                                incapable
+                            }
+                        </p>
+                        <p><a class="btn btn-primary" href="@routes.HabitantController.edit(habitant.id)">Edit</a></p>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Working history</h5>
+                        @working_history(habitant)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+</div>
+

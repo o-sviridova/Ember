@@ -1,0 +1,124 @@
+@import utils.Tabs;
+@(isLoggedIn: Boolean, account: Account, activeTab: String)
+
+@main("Home", isLoggedIn, account) {
+        @if(isLoggedIn) {
+        <div class="container">
+            <br>
+
+            <div class="row">
+                <div class="col-sm-2">
+                    <!-- Nav tabs -->
+                    <p>@account.role</p>
+                    <ul class="nav flex-column nav-pills" role="tablist">
+                        <li class="nav-item">
+                            <a id="profile-tab" class="nav-link @if(activeTab == Tabs.PROFILE.name) {active}" data-toggle="tab" href="#profile">
+                                Profile</a>
+                        </li>
+                        @if(account.role.name != "HABITANT") {
+                            @if(account.role.name == "MAYOR") {
+                                <li class="nav-item">
+                                    <a id="habitants-tab" class="nav-link @if(activeTab == Tabs.HABITANTS.name) {active}" data-toggle="tab" href="#habitants">
+                                        Habitants</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a id="organizations-tab" class="nav-link @if(activeTab == Tabs.ORGANIZATIONS.name) {active}" data-toggle="tab" href="#organizations">
+                                        Organizations</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a id="mrequests-tab" class="nav-link @if(activeTab == Tabs.MAYOR_REQUESTS.name) {active}" data-toggle="tab" href="#mrequests">
+                                        Requests</a>
+                                </li>
+                                <!--<li class="nav-item">
+                                    <a id="mvacancies-tab" class="nav-link @if(activeTab == Tabs.MAYOR_VACANCIES.name) {active}" data-toggle="tab" href="#mvacancies">
+                                        Mayor vacancies</a>
+                                </li>-->
+                            }
+
+                            @if(account.role.name == "CHIEF") {
+                                <li class="nav-item">
+                                    <a id="workers-tab" class="nav-link @if(activeTab == Tabs.WORKERS.name) {active}" data-toggle="tab" href="#workers">
+                                        Workers</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a id="vacancies-tab" class="nav-link @if(activeTab == Tabs.VACANCIES.name) {active}" data-toggle="tab" href="#vacancies">
+                                        Vacancies</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a id="requests-tab" class="nav-link @if(activeTab == Tabs.REQUESTS.name) {active}" data-toggle="tab" href="#requests">
+                                        Requests</a>
+                                </li>
+                            }
+
+                            @if(account.role.name == "POSTMAN") {
+                                <li class="nav-item">
+                                    <a id="messages-tab" class="nav-link @if(activeTab == Tabs.MESSAGES.name) {active}" data-toggle="tab" href="#messages">
+                                        Messages</a>
+                                </li>
+                            }
+                        }
+                    </ul>
+
+                </div>
+
+                <div class="col-sm-10">
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div id="profile" class="container tab-pane @if(activeTab == Tabs.PROFILE.name) {active} else {fade}"><br>
+                            <h3>Profile</h3>
+                            @profile_module(account)
+                        </div>
+                        @if(account.role.name != "HABITANT") {
+                            @if(account.role.name == "MAYOR") {
+                                <div id="habitants" class="container tab-pane @if(activeTab == Tabs.HABITANTS.name) {active} else {fade}"><br>
+                                    <h3>Habitants</h3>
+                                    @habitants_module(account)
+                                </div>
+                                <div id="organizations" class="container tab-pane @if(activeTab == Tabs.ORGANIZATIONS.name) {active} else {fade}"><br>
+                                    <h3>Organizations</h3>
+                                    @organizations_module(account)
+                                </div>
+                                <div id="mrequests" class="container tab-pane @if(activeTab == Tabs.MAYOR_REQUESTS.name) {active} else {fade}"><br>
+                                    <h3>Requests</h3>
+                                    @mrequests_module(account)
+                                </div>
+                                <!--<div id="mvacancies" class="container tab-pane @if(activeTab == Tabs.MAYOR_VACANCIES.name) {active} else {fade}"><br>
+                                    <h3>Mayor vacancies</h3>
+                                    @mvacancies_module(account)
+                                </div>-->
+                            }
+                            @if(account.role.name == "CHIEF") {
+                                <div id="workers" class="container tab-pane @if(activeTab == Tabs.WORKERS.name) {active} else {fade}"><br>
+                                    <h3>Workers</h3>
+                                    @workers_module(account)
+                                </div>
+                                <div id="vacancies" class="container tab-pane @if(activeTab == Tabs.VACANCIES.name) {active} else {fade}"><br>
+                                    <h3>Vacancies</h3>
+                                    @vacancies_module(account)
+                                </div>
+                                <div id="requests" class="container tab-pane @if(activeTab == Tabs.REQUESTS.name) {active} else {fade}"><br>
+                                    <h3>Requests</h3>
+                                    @requests_module(account)
+                                </div>
+                            }
+
+                            @if(account.role.name == "POSTMAN") {
+                                <div id="messages" class="container tab-pane @if(activeTab == Tabs.MESSAGES.name) {active} else {fade}"><br>
+                                    <h3>Messages</h3>
+                                    @messages_module(account)
+                                </div>
+                            }
+                        }
+                    </div>
+
+                </div>
+            </div>
+            <!--div class="row under" >-->
+
+            </div>
+        <!--div class="doc wrapper">You are log in</div-->
+        @* *@
+    } else {
+        <div class="doc wrapper">Please, log in or sign up</div>
+    }
+}

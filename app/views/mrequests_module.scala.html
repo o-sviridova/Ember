@@ -1,0 +1,28 @@
+@import services.RequestService
+
+@(account: Account)
+
+<div xmlns:vertical-align="http://www.w3.org/1999/xhtml">
+    <div class="container">
+        @for(request <- RequestService.getRequests){
+            <div class="row border">
+                <div class="col-md-9" align="left">
+                    <p>Type: @request.requestType.name Organization: @request.organization.name Status: @request.status.name</p>
+                    <p>Description:  @request.getParseJson()</p>
+                </div>
+                <div class="col-md-3" align="right">
+                    @if(request.status.name == "OPEN"){
+                    <form action="@routes.RequestController.accept(request.id)">
+                        <button type="submit" class="btn btn-info my-3" >
+                            Accept</button>
+                    </form>
+                    <form action="@routes.RequestController.deny(request.id)">
+                        <button type="submit" class="btn btn-info my-3" >
+                            Deny</button>
+                    </form>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>

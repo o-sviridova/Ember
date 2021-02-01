@@ -1,0 +1,6 @@
+@(habitants : List[Habitant])
+<select class="custom-select custom-select-lg mb-3" id="select-new-chief">
+    @for(habitant <- habitants) {
+        <option value="@habitant.id">@habitant.surname @habitant.name</option>
+    }
+</select>

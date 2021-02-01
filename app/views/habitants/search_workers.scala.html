@@ -1,0 +1,54 @@
+@(workers : List[Habitant])
+
+<div id="worker-results">
+    @for(worker <- workers){
+    <div class="card">
+        <div class="card-header container" id="heading-@worker.id">
+            <div class="row">
+                <div class="col-md-9">
+                    <p>Surname: @worker.surname Name: @worker.name </p>
+                </div>
+                <div class="col-md-3" align="right">
+                    <button class="btn btn-primary" data-toggle="collapse" data-target="#collapse-@worker.id" aria-expanded="false" aria-controls="collapse-@worker.id">
+                        Details
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="collapse-@worker.id" class="collapse" aria-labelledby="heading-@worker.id" data-parent="#worker-results">
+            <div class="card-body container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>
+                            Information
+                        </h5>
+                        <p>Surname: @worker.surname </p>
+                        <p>Name: @worker.name </p>
+                        <p>Patronymic: @worker.patronymic</p>
+                        <p>BirthDay: @worker.birthday</p>
+                        <p>Sex: @worker.sex</p>
+                        @if(worker.careerObjective != null){
+                            <p>@worker.careerObjective.name</p>
+                        }
+                        <p>Working capacity:
+                            @if(worker.workingCapacity){
+                                capable
+                            } else {
+                                incapable
+                            }
+                        </p>
+                        @if(worker.currentwork.get(0).vacancyType.name != VacancyType.CHIEF_TYPE) {
+                        <p><a class="btn btn-primary" href="@routes.VacancyController.freeVacancy(worker.id, worker.currentwork.get(0).id)">Fire</a></p>
+                        }
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Working history</h5>
+                        @working_history(worker)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+</div>
+

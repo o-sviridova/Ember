@@ -1,0 +1,55 @@
+@(habitantForm : Form[models.Habitant], accountForm : Form[models.Account], isLoggedIn: Boolean, account: models.Account)
+@import helper._
+@import utils.Tabs;
+
+@main("Edit Habitant Profile", isLoggedIn, account){
+<div class="container">
+    <br>
+    @helper.form(action = routes.HabitantController.update()){
+        <div class="row">
+            <input type="hidden" name="@habitantForm("id").name" value='@habitantForm("id").value' >
+            <div class="col-sm-4">@inputText(habitantForm("name"), '_label ->"Name")</div>
+            <div class="col-sm-4">@inputText(habitantForm("surname"), '_label ->"Surname")</div>
+            <div class="col-sm-4">@inputText(habitantForm("patronymic"), '_label ->"Patronymic")</div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                @select(habitantForm("sex"), options = helper.options(Sex.values().toSeq.map(_.toString)))
+            </div>
+            <div class="col-sm-4">
+                <dl class=" " id="surname_field">
+                    <dt><label for="edit-date">Birthday</label></dt>
+                    <dd>
+                        <input id="edit-date" type="date" name="@habitantForm("birthday").name" value='@habitantForm("birthday").value'>
+                    </dd>
+                </dl>
+            </div>
+            <div class="col-sm-4">@checkbox(habitantForm("workingCapacity"))</div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-info my-3" >Save</button>
+                <button class="btn btn-info my-3" type="button" data-toggle="collapse" data-target="#account-form-collapsed" aria-expanded="false" aria-controls="account-form-collapsed">
+                    Edit account
+                </button>
+                <a type="button" class="btn btn-info my-3" href="@routes.LoginController.tab(Tabs.HABITANTS.name)" >Cancel</a>
+            </div>
+        </div>
+    }
+    @helper.form(action = routes.HabitantController.updateAccount()){
+        <input type="hidden" name="@accountForm("id").name" value='@accountForm("id").value' >
+        <div class="collapse" id="account-form-collapsed">
+            <div class="card card-body">
+                <div class="row">
+                    <div class="col-sm-4">@inputText(accountForm("username"), '_label ->"Username")</div>
+                    <div class="col-sm-4">@inputPassword(accountForm("password"), '_label ->"Password")</div>
+                    <div class="col-sm-4">@inputPassword(habitantForm("rePassword"), '_label ->"Repeat password")</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12"><button type="submit" class="btn btn-info my-3" >Save</button></div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+}

@@ -1,0 +1,19 @@
+@import services.NotificationService
+
+@(account: Account)
+
+<div xmlns:vertical-align="http://www.w3.org/1999/xhtml">
+    <div class="container">
+        @for(notification <- NotificationService.getOpenNotifications()){
+        <div class="row">
+            <div class="col-md-12" align="left">
+                <p>Description: @notification.message</p>
+                <form action="@routes.NotificationController.accept(notification.id)">
+                    <button type="submit" class="btn btn-info my-3" >
+                        Mark as accepted</button>
+                </form>
+            </div>
+        </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,62 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+GET     /                           controllers.LoginController.index
+GET     /home                       controllers.LoginController.home
+GET     /tab/:tabstr                controllers.LoginController.tab(tabstr: String)
+GET     /login                      controllers.LoginController.login
+POST    /login                      controllers.LoginController.postLogin
+GET     /logout                     controllers.LoginController.logout
+
+
+#reverse
+GET     /organization/get/organizations             controllers.OrganizationController.getOrganizations
+GET     /habitant/search/organizations              controllers.HabitantController.searchHabitantsBy(query ?= null, organizationId ?= null, workingCapacity ?= null)
+GET     /organization/search/organizations          controllers.OrganizationController.searchOrganizationsBy(query ?= null)
+
+#profile
+GET     /habitant/profile/edit/:id                  controllers.HabitantController.editVacancyType(id: Integer)
+POST    /habitant/profile/edit                      controllers.HabitantController.updateVacancyType()
+#habitants
+GET     /habitant/create                            controllers.HabitantController.create
+POST    /habitant/create                            controllers.HabitantController.save
+GET     /habitant/edit/:id                          controllers.HabitantController.edit(id: Integer)
+POST    /habitant/edit/                             controllers.HabitantController.update()
+POST    /habitant/account/edit                      controllers.HabitantController.updateAccount()
+
+#vacancy
+GET     /vacancy/create                 controllers.VacancyController.create
+POST    /vacancy/create                 controllers.VacancyController.save
+GET     /vacancy/get/candidates/:id     controllers.VacancyController.searchCandidatesByVacancy(id: Integer)
+GET     /vacancy/hire/:habId&:vacId     controllers.VacancyController.hireCandidate(habId: Integer, vacId: Integer)
+GET     /vacancy/fire/:vacId            controllers.VacancyController.freeVacancy(habId: Integer, vacId: Integer)
+
+#vacancy types
+GET     /vacancytype/create             controllers.VacancyTypeController.create
+POST    /vacancytype/create             controllers.VacancyTypeController.save
+GET     /vacancytype/get/:orgId         controllers.VacancyTypeController.getVacancyTypesByOrganization(orgId: Integer)
+
+#requests
+GET     /home/request/abort/:id         controllers.RequestController.abort(id: Integer)
+GET     /home/request/deny/:id          controllers.RequestController.deny(id: Integer)
+GET     /home/request/accept/:id        controllers.RequestController.accept(id: Integer)
+
+#organizations
+GET     /organization/show/:id          controllers.OrganizationController.show(id: Integer)
+GET     /organization/create            controllers.OrganizationController.create
+POST    /organization/create            controllers.OrganizationController.save
+GET     /organization/edit/:id          controllers.OrganizationController.edit(id: Integer)
+POST    /organization/edit/             controllers.OrganizationController.update()
+GET     /organization/close/:id         controllers.OrganizationController.close(id: Integer)
+GET     /organization/reopen/:id        controllers.OrganizationController.reopen(id: Integer)
+POST    /organization/recover/          controllers.OrganizationController.recover()
+GET     /organization/chief/challengers controllers.HabitantController.searchLoafers(query ?= null)
+
+#notifications
+GET     /notification/accept/:id        controllers.NotificationController.accept(id: Integer)
+
+GET     /javascriptRoutes               controllers.RouteController.javascriptRoutes
+
+
+GET     /assets/*file                   controllers.Assets.versioned(path="/public", file: Asset)

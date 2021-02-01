@@ -1,0 +1,41 @@
+@import services.VacancyService
+@(organization: Organization)
+
+@for(vacancy <- VacancyService.getVacanciesByOrganizations(organization.id)) {
+<div class="row">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p><b>Vacancy type:</b></p>
+            </div>
+            <div class="col-md-6">
+                <p><b>@vacancy.vacancyType.name</b></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <p>Employee:</p>
+            </div>
+            <div class="col-md-6">
+                <p>@vacancy.worker.surname @vacancy.worker.name</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <p>Work from:</p>
+            </div>
+            <div class="col-md-6">
+                <p>@vacancy.fromDate</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <p>Work to:</p>
+            </div>
+            <div class="col-md-6">
+                <p>@vacancy.toDate</p>
+            </div>
+        </div>
+    </div>
+</div>
+}

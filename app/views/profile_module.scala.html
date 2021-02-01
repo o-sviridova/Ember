@@ -1,0 +1,5 @@
+@import services.HabitantService
+@(account: Account)
+<div>
+    @habitants.show(HabitantService.getHabitantByAcc(account.id))
+</div>

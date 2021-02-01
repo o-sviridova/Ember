@@ -1,0 +1,121 @@
+@(habitant: Habitant)
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><b>Name: </b></p>
+                </div>
+                <div class="col-md-6">
+                    <p>@habitant.name</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <p><b>Surname: </b></p>
+                </div>
+                <div class="col-md-6">
+                    <p>@habitant.surname</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <p><b>Patronymic: </b></p>
+                </div>
+                @if(habitant.patronymic != null){
+                <div class="col-md-6">
+                    <p>@habitant.patronymic</p>
+                </div>
+                }
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <p><b>Birthday: </b></p>
+                </div>
+                <div class="col-md-6">
+                    <p>@habitant.birthday</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <p><b>WorkingCapacity: </b></p>
+                </div>
+                <div class="col-md-6">
+                    <p>@habitant.workingCapacity</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <p><b>Current Work: </b></p>
+                </div>
+                <div class="col-md-6">
+                    @vac = @{habitant.getCurrentWork()}
+                    @if(vac != null) {
+                    <p>@vac.vacancyType.name</p>
+                    } else {
+                    <p>is not working</p>
+                    }
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <p>
+                        <b>Desired vacancy: </b>
+                        <a class="btn btn-primary" href="@routes.HabitantController.editVacancyType(habitant.id)">
+                            <i class="fas fa-edit fa-sm"></i>
+                        </a>
+                    </p>
+                </div>
+                @if(habitant.careerObjective != null){
+                <div class="col-md-6">
+                    <p><b>@habitant.careerObjective.name</b></p>
+                </div>
+                }
+            </div>
+            @*
+            <div class="row">
+                <div class="col-md-6">
+                    <p><b>Desired vacancy: </b><a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        <i class="fas fa-edit fa-sm"></i>
+                    </a></p>
+                </div>
+                @if(habitant.careerObjective != null){
+                <div class="col-md-6">
+                    <p><b>@habitant.careerObjective.name</b></p>
+                </div>
+                }
+            </div>
+            <div class="collapse" id="collapseExample" >
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><b>Organization: </b></p>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="container" >
+                            <input type="text" name="organization_search" id="autocomplete_organization" width="100%" />
+                        </div>
+                        <div class="wrapper doc container" id="current_organization_module" ></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><b>VacancyType: </b></p>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                        </div>
+                    </div>
+                </div>
+                <script src="../assets/javascripts/jquery.autocomplete.js"></script>
+                <script src="../assets/javascripts/ember/search-module.js"></script>
+            </div>
+            *@
+        </div>
+        <div class="col-md-6">
+            <h5>Working history</h5>
+            @working_history(habitant)
+        </div>
+    </div>
+</div>

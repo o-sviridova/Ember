@@ -1,0 +1,39 @@
+@(habitantForm : Form[models.Habitant], isLoggedIn: Boolean, account: models.Account)
+@import helper._
+@import utils.Tabs;
+
+@main("Add Habitant", isLoggedIn, account){
+<div class="container">
+    <br>
+        @helper.form(action = routes.HabitantController.save()){
+            <div class="row">
+                <div class="col-sm-4">@inputText(habitantForm("name"), '_label ->"Name")</div>
+                <div class="col-sm-4">@inputText(habitantForm("surname"), '_label ->"Surname")</div>
+                <div class="col-sm-4">@inputText(habitantForm("patronymic"), '_label ->"Patronymic")</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    @select(habitantForm("sex"), options = helper.options(Sex.values().toSeq.map(_.toString)))
+                </div>
+                <div class="col-sm-4">
+                    <dl class=" " id="surname_field">
+                        <dt><label for="edit-date">Birthday</label></dt>
+                        <dd>
+                            <input id="edit-date" type="date" name="@habitantForm("birthday").name" value='@habitantForm("birthday").value'>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="col-sm-4">@checkbox(habitantForm("workingCapacity"))</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">@inputText(habitantForm("account.username"), '_label ->"Username")</div>
+                <div class="col-sm-4">@inputPassword(habitantForm("account.password"), '_label ->"Password")</div>
+                <div class="col-sm-4">@inputPassword(habitantForm("account.rePassword"), '_label ->"Repeat password")</div>
+            </div>
+            <div class="row">
+                <button type="submit" class="btn btn-info my-3" >Save</button>
+                <a type="button" class="btn btn-info my-3" href="@routes.LoginController.tab(Tabs.HABITANTS.name)" >Cancel</a>
+            </div>
+        }
+</div>
+}

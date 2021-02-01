@@ -1,0 +1,39 @@
+@import services.VacancyTypeService
+@import services.HabitantService
+@import services.OrganizationService
+@import utils.Tabs
+
+@(vacancyForm : Form[Vacancy], isLoggedIn: Boolean, account: Account)
+@import helper._
+
+@habitant=@{HabitantService.getHabitantByAcc(account.id)}
+@organization=@{OrganizationService.getOrganizationByChief(habitant.id)}
+@types=@{VacancyTypeService.getVacancyTypesStr(organization.id)}
+
+@main("Create Vacancy", isLoggedIn, account){
+    <div class="row">
+        <div class="col-sm-2"></div>
+
+        <div class="col-sm-10">
+            <h1>Create vacancy</h1>
+            @helper.form(action = routes.VacancyController.save()){
+                @inputText(vacancyForm("title"),
+                    '_label ->"Title")
+                @inputText(vacancyForm("positionCount"),
+                    '_label ->"Enter count of position",
+                    'type -> "number"
+                )
+                @select(
+                    vacancyForm("vacancyType.id"),
+                    helper.options(types),
+                    '_label -> "Vacancy type",
+                    '_default -> "-- Select type --"
+                )
+
+                <button type="submit" class="btn btn-info my-3" >
+                        Create vacancy</button>
+                <a type="button" class="btn btn-info my-3" href="@routes.LoginController.tab(Tabs.VACANCIES.name)" >Cancel</a>
+            }
+        </div>
+    </div>
+}

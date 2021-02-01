@@ -1,0 +1,44 @@
+@(organizations : List[Organization])
+
+<div id="accordion_organization">
+    @for(organization <- organizations){
+        <div class="card">
+            <div class="card-header container" id="heading-org-@organization.id">
+                <div class="row">
+                    <div class="col-md-9">
+                        <p>Organization: @organization.name </p>
+                    </div>
+                    <div class="col-md-3" align="right">
+                        <button class="btn btn-primary" data-toggle="collapse" data-target="#collapse-org-@organization.id" aria-expanded="false" aria-controls="collapse-org-@organization.id">
+                            Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="collapse-org-@organization.id" class="collapse" aria-labelledby="heading-org-@organization.id" data-parent="#accordion_organization">
+                <div class="card-body container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>
+                                Information
+                            </h5>
+                            @if(organization.isClosed){
+                                <p>Organization was closed</p>
+                                <p><a class="btn btn-primary" href="@routes.OrganizationController.reopen(organization.id)">Reopen</a></p>
+                            } else {
+                                <p>Organization is active </p>
+                                <p><a class="btn btn-primary" href="@routes.OrganizationController.edit(organization.id)">Edit</a></p>
+                                <p><a class="btn btn-primary" href="@routes.OrganizationController.close(organization.id)">Close</a></p>
+                            }
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Positions</h5>
+                            @positions(organization)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

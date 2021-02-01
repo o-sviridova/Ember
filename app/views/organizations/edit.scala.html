@@ -1,0 +1,59 @@
+@import services.HabitantService
+@import utils.Tabs;
+@(organizationForm : Form[models.Organization], isLoggedIn: Boolean, account: models.Account)
+@import helper._
+
+
+@main("Edit Habitant Profile", isLoggedIn, account){
+
+<script src="@routes.Assets.versioned("javascripts/ember/new-chief-search.js")" type="text/javascript"></script>
+
+<div class="container">
+    <br>
+    <div class="row">
+        <div class="col-md-6">
+            @helper.form(action = routes.OrganizationController.update()){
+                <input type="hidden" name="@organizationForm("id").name" value='@organizationForm("id").value' >
+                @inputText(organizationForm("name"), '_label ->"Name")
+                <input type="hidden" id="new-chief-hidden-id" name="@organizationForm("chief.id").name" value='@organizationForm("chief.id").value'>
+                <input type="hidden" id="old-value-hidden-id" value='@organizationForm("chief.id").value'>
+                <input type="hidden" id="old-value-name" value='@organizationForm("chief.surname").value @organizationForm("chief.name").value'>
+
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Chief</span>
+                    </div>
+                    <input id="new_chief_form" type="text" value="@organizationForm("chief.surname").value @organizationForm("chief.name").value" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" readonly>
+                </div>
+
+                <button type="submit" class="btn btn-info my-3" >Save</button>
+                <a type="button" class="btn btn-info my-3" href="@routes.LoginController.tab(Tabs.ORGANIZATIONS.name)" >Cancel</a>
+            }
+        </div>
+        <div class="col-md-6 container" align="left">
+            <div class="row">
+                <h5> Search new chief</h5>
+            </div>
+            <div class="row">
+                <form id="search-form-edit-chief">
+                    <input type="text" id="search-query-edit-chief"/>
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+            <div class="row" align="left" id="search_result_edit_organization">
+                <div id = "edit-chief">
+                    <select class="custom-select custom-select-lg mb-3" id="select-new-chief">
+                        <option value="@organizationForm("chief.id").value">@organizationForm("chief.surname").value @organizationForm("chief.name").value</option>
+                        @for(habitant <- HabitantService.getLoafers) {
+                            <option value="@habitant.id">@habitant.surname @habitant.name</option>
+                            }
+                    </select>
+                        <!--option value="@organizationForm("chief.id").value">@organizationForm("chief.surname").value @organizationForm("chief.name").value</option-->
+                        @* habitants.search_result_edit_chief(HabitantService.getLoafers) *@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}
